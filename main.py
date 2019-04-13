@@ -67,7 +67,7 @@ class DisplayArrangeWindow(Gtk.Window):
     def get_selected_favorite_name(self):
         fav_iter = self.fav_cb.get_active_iter()
 
-        if fav_iter != None:
+        if fav_iter is not None:
             return self.fav_model[fav_iter][0]
 
     def apply_arrangement(self, _):

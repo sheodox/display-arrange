@@ -29,6 +29,11 @@ class ScreenOps:
             if current == fav['monitors']:
                 return index
 
+    def find_name_of_current(self):
+        current = self.get_current_xrandr_settings()
+        for index, fav in enumerate(self.favorites):
+            if current == fav['monitors']:
+                return fav['name']
 
     def find_favorite(self, name):
         return next((item for item in self.favorites if item['name'] == name), None)
@@ -66,6 +71,9 @@ class ScreenOps:
         for favorite in self.favorites:
             store.append([favorite["name"]])
         return store
+
+    def get_favorites_as_list(self):
+        return list(item['name'] for item in self.favorites)
 
     def get_current_xrandr_settings(self):
         monitors = []
