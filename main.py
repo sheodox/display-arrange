@@ -17,6 +17,7 @@ class DisplayArrangeWindow(Gtk.Window):
 
     def __init__(self):
         Gtk.Window.__init__(self, title="Display Arrange")
+        self.set_border_width(10)
         self.top_container = quickgtk.new_vbox()
         self.add(self.top_container)
 
@@ -46,6 +47,7 @@ class DisplayArrangeWindow(Gtk.Window):
         delete_button.connect("clicked", self.delete_arrangement)
 
         quickgtk.add_all(hbox, [
+            Gtk.Label('Select a favorite arrangement'),
             self.fav_cb,
             apply_button,
             delete_button
@@ -54,9 +56,10 @@ class DisplayArrangeWindow(Gtk.Window):
 
     def render_new_favorite(self):
         hbox = quickgtk.new_hbox()
-        new_name_entry, fav_button = quickgtk.add_all(hbox, [
+        _, new_name_entry, fav_button = quickgtk.add_all(hbox, [
+            Gtk.Label('Favorite the current screen arrangement'),
             Gtk.Entry(),
-            Gtk.Button("Favorite the current arrangement")
+            Gtk.Button("Save")
         ])
         self.top_container.add(hbox)
 
@@ -68,7 +71,6 @@ class DisplayArrangeWindow(Gtk.Window):
 
     def get_selected_favorite_name(self):
         fav_iter = self.fav_cb.get_active_iter()
-        print(fav_iter)
 
         if fav_iter != None:
             return self.fav_model[fav_iter][0]
@@ -112,7 +114,6 @@ class ScreenOps:
 
     def apply(self, name):
         arrangement = self.find_favorite(name)
-        pp.pprint(arrangement)
         if arrangement:
             self.run(self.build_xrandr_apply(arrangement['monitors']))
 
@@ -120,7 +121,6 @@ class ScreenOps:
         cmd = 'xrandr'
         for monitor in monitors:
             cmd += ' --output {} --mode {}x{} --pos {}x{}'.format(monitor['monitor_name'], monitor['res_w'], monitor['res_h'], monitor['axis_x'], monitor['axis_y'])
-        print(cmd)
         return cmd
 
     def delete(self, name):
