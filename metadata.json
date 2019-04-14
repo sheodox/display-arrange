@@ -1,0 +1,7 @@
+{
+    "uuid": "display-arrange@sheodox",
+    "name": "Display Arrange Quick Select",
+    "description": "Quickly select a display arrangement created using the main application",
+    "icon": "preferences-desktop-display",
+    "max-instances": -1
+}
